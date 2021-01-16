@@ -459,7 +459,7 @@ public class PathFixture extends AbstractFixture
     /**
      * Apply point 
      */
-    private void applyPoint(Point point, int index, float progress)
+    void applyPoint(Point point, int index, float progress)
     {
         double x = 0, y = 0, z = 0;
 
@@ -498,7 +498,7 @@ public class PathFixture extends AbstractFixture
     /**
      * Apply angle  
      */
-    private void applyAngle(Angle angle, int index, float progress)
+    void applyAngle(Angle angle, int index, float progress)
     {
         float yaw = 0, pitch = 0, roll = 0, fov = 0;
 

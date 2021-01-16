@@ -7,14 +7,7 @@ import mchorse.aperture.camera.FixtureRegistry;
 import mchorse.aperture.camera.FixtureRegistry.FixtureInfo;
 import mchorse.aperture.camera.ModifierRegistry;
 import mchorse.aperture.camera.ModifierRegistry.ModifierInfo;
-import mchorse.aperture.camera.fixtures.AbstractFixture;
-import mchorse.aperture.camera.fixtures.CircularFixture;
-import mchorse.aperture.camera.fixtures.DollyFixture;
-import mchorse.aperture.camera.fixtures.IdleFixture;
-import mchorse.aperture.camera.fixtures.KeyframeFixture;
-import mchorse.aperture.camera.fixtures.ManualFixture;
-import mchorse.aperture.camera.fixtures.NullFixture;
-import mchorse.aperture.camera.fixtures.PathFixture;
+import mchorse.aperture.camera.fixtures.*;
 import mchorse.aperture.camera.modifiers.AbstractModifier;
 import mchorse.aperture.camera.modifiers.AngleModifier;
 import mchorse.aperture.camera.modifiers.DragModifier;
@@ -29,6 +22,7 @@ import mchorse.aperture.client.KeyboardHandler;
 import mchorse.aperture.client.RenderingHandler;
 import mchorse.aperture.client.gui.GuiCameraEditor;
 import mchorse.aperture.client.gui.GuiModifiersManager;
+import mchorse.aperture.client.gui.panels.GuiRollercoasterFixturePanel;
 import mchorse.aperture.client.gui.panels.GuiCircularFixturePanel;
 import mchorse.aperture.client.gui.panels.GuiDollyFixturePanel;
 import mchorse.aperture.client.gui.panels.GuiIdleFixturePanel;
@@ -206,6 +200,7 @@ public class ClientProxy extends CommonProxy
         GuiCameraEditor.PANELS.put(NullFixture.class, GuiNullFixturePanel.class);
         GuiCameraEditor.PANELS.put(ManualFixture.class, GuiManualFixturePanel.class);
         GuiCameraEditor.PANELS.put(DollyFixture.class, GuiDollyFixturePanel.class);
+        GuiCameraEditor.PANELS.put(RollercoasterFixture.class, GuiRollercoasterFixturePanel.class);
 
         FixtureRegistry.registerClient(IdleFixture.class, "aperture.gui.fixtures.idle", new Color(0.085F, 0.62F, 0.395F));
         FixtureRegistry.registerClient(PathFixture.class, "aperture.gui.fixtures.path", new Color(0.408F, 0.128F, 0.681F));
@@ -214,6 +209,7 @@ public class ClientProxy extends CommonProxy
         FixtureRegistry.registerClient(NullFixture.class, "aperture.gui.fixtures.null", new Color(0.1F, 0.1F, 0.12F));
         FixtureRegistry.registerClient(ManualFixture.class, "aperture.gui.fixtures.manual", new Color().set(0x0050b3));
         FixtureRegistry.registerClient(DollyFixture.class, "aperture.gui.fixtures.dolly", new Color().set(0xffa500));
+        FixtureRegistry.registerClient(RollercoasterFixture.class, "aperture.gui.fixtures.rollercoaster", new Color().set(0xff0000));
 
         /* Register camera modifiers */
         GuiModifiersManager.PANELS.put(ShakeModifier.class, GuiShakeModifierPanel.class);
