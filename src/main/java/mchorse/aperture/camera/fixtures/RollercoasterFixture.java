@@ -5,7 +5,12 @@ import mchorse.aperture.camera.CameraProfile;
 import mchorse.aperture.camera.data.Angle;
 import mchorse.aperture.camera.data.Point;
 import mchorse.aperture.camera.data.Position;
+import mchorse.aperture.utils.L10n;
+import net.minecraft.client.Minecraft;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
+
+import static net.minecraft.util.math.MathHelper.*;
 
 public class RollercoasterFixture extends PathFixture{
 
@@ -14,13 +19,9 @@ public class RollercoasterFixture extends PathFixture{
      */
 
     @Expose
-    public boolean changeFOV;
-
-    @Expose
     public float fovModifier;
-
-    @Expose
-    public float granularity;
+    
+    final float granularity = 1e-1f;
 
     public RollercoasterFixture(long duration)
     {
@@ -34,7 +35,7 @@ public class RollercoasterFixture extends PathFixture{
         final int length = super.points.size() - 1;
 
         float x = (ticks / (float) this.duration) + (1.0F / duration) * previewPartialTick;
-        x = MathHelper.clamp(x * length, 0, length);
+        x = clamp(x * length, 0, length);
 
         final int index = (int) Math.floor(x);
         x -= index;
@@ -75,9 +76,28 @@ public class RollercoasterFixture extends PathFixture{
         if (prevLen == 0 || nextLen == 0)
             return;
 
-        if (changeFOV)
-            angle.fov += fovModifier * (nextLen - prevLen);
+        angle.fov = (float) (70f + fovModifier * (nextLen - prevLen));
 
-        //TODO: cauculate angle
+        //TODO: cauculate ROLL
+        Vec3d forwardVector = new Vec3d(nextPoint.x - prevPoint.x,
+                nextPoint.y - prevPoint.y,
+                nextPoint.z - prevPoint.z);
+
+
+        angle.yaw = (float) -Math.toDegrees(Math.atan2(forwardVector.x, forwardVector.z));
+        angle.pitch = (float) Math.toDegrees(Math.atan2(Math.sqrt(Math.pow(forwardVector.x, 2) + Math.sqrt(Math.pow(forwardVector.z, 2))), forwardVector.y)) - 90F;
+
+
+
+        // how?
+
     }
+
+    Vec3d normalize(Vec3d op)
+    {
+        final double length = op.lengthVector();
+        return new Vec3d(op.x / length, op.y / length, op.z / length);
+    }
+
+    //TODO: toJSON/fromJSON/toByteBuf/fromByteBuf
 }
