@@ -18,6 +18,7 @@ public class GuiRollercoasterFixturePanel extends GuiPathFixturePanel {
 
         this.left.add(fovModifier);
         this.right.remove(super.angle);
+        this.interp.remove(this.interp.angle);
     }
 
     private RollercoasterFixture fixture()

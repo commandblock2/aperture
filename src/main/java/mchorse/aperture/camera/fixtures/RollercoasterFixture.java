@@ -78,25 +78,36 @@ public class RollercoasterFixture extends PathFixture{
 
         angle.fov = (float) (70f + fovModifier * (nextLen - prevLen));
 
-        //TODO: cauculate ROLL
+        //TODO: calculate ROLL
         Vec3d forwardVector = new Vec3d(nextPoint.x - prevPoint.x,
                 nextPoint.y - prevPoint.y,
                 nextPoint.z - prevPoint.z);
 
 
         angle.yaw = (float) -Math.toDegrees(Math.atan2(forwardVector.x, forwardVector.z));
-        angle.pitch = (float) Math.toDegrees(Math.atan2(Math.sqrt(Math.pow(forwardVector.x, 2) + Math.sqrt(Math.pow(forwardVector.z, 2))), forwardVector.y)) - 90F;
+        angle.pitch = (float) -Math.toDegrees(Math.atan2(forwardVector.y, Math.sqrt(Math.pow(forwardVector.x, 2) + Math.pow(forwardVector.z, 2))));
 
 
+        Vec3d leftOrRightVector = new Vec3d(nextPoint.x - thisPoint.x,
+                nextPoint.y - thisPoint.y,
+                nextPoint.z - thisPoint.z).crossProduct(forwardVector);
 
+        Vec3d upOrDownVector = leftOrRightVector.crossProduct(forwardVector);
+
+        Vec3d yAxis = new Vec3d(0, 1 ,0);
+        double roll = Math.toDegrees(Math.acos(upOrDownVector.dotProduct(yAxis) / upOrDownVector.lengthVector())) * sign(leftOrRightVector.y);
+
+        if(upOrDownVector.y < 0)
+            roll = sign(roll) * 180 - roll;
+
+        angle.roll = (float) roll;
         // how?
 
     }
 
-    Vec3d normalize(Vec3d op)
+    int sign(double op)
     {
-        final double length = op.lengthVector();
-        return new Vec3d(op.x / length, op.y / length, op.z / length);
+        return (op > 0 ? 1 : (op < 0 ? -1 : 0));
     }
 
     //TODO: toJSON/fromJSON/toByteBuf/fromByteBuf
