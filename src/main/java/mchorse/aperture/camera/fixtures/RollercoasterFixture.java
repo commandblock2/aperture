@@ -88,19 +88,22 @@ public class RollercoasterFixture extends PathFixture{
         angle.pitch = (float) -Math.toDegrees(Math.atan2(forwardVector.y, Math.sqrt(Math.pow(forwardVector.x, 2) + Math.pow(forwardVector.z, 2))));
 
 
-        Vec3d leftOrRightVector = new Vec3d(nextPoint.x - thisPoint.x,
+        Vec3d rightVector = new Vec3d(nextPoint.x - thisPoint.x,
                 nextPoint.y - thisPoint.y,
                 nextPoint.z - thisPoint.z).crossProduct(forwardVector);
 
-        Vec3d upOrDownVector = leftOrRightVector.crossProduct(forwardVector);
+
+
+
 
         Vec3d yAxis = new Vec3d(0, 1 ,0);
-        double roll = Math.toDegrees(Math.acos(upOrDownVector.dotProduct(yAxis) / upOrDownVector.lengthVector())) * sign(leftOrRightVector.y);
+        Vec3d idkVector = forwardVector.crossProduct(yAxis);
 
-        if(upOrDownVector.y < 0)
-            roll = sign(roll) * 180 - roll;
+        angle.roll = (float) Math.toDegrees(Math.acos(rightVector.dotProduct(idkVector) /
+                        (rightVector.lengthVector() * idkVector.lengthVector()))) + 180F;
 
-        angle.roll = (float) roll;
+        angle.roll *= sign(-rightVector.y);
+
         // how?
 
     }
