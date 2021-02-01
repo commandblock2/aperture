@@ -10,13 +10,16 @@ import net.minecraft.client.Minecraft;
 public class GuiRollercoasterFixturePanel extends GuiPathFixturePanel {
 
     public GuiTrackpadElement fovModifier;
+    public GuiTrackpadElement gravity;
 
     public GuiRollercoasterFixturePanel(Minecraft mc, GuiCameraEditor editor) {
         super(mc, editor);
 
         this.fovModifier = new GuiTrackpadElement(mc, (value) -> fixture().fovModifier = value.floatValue());
+        this.gravity = new GuiTrackpadElement(mc, (value) -> fixture().gravity = value.floatValue());
 
         this.left.add(fovModifier);
+        this.left.add(gravity);
         this.right.remove(super.angle);
         this.interp.remove(this.interp.angle);
     }

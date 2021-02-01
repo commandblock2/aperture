@@ -20,6 +20,9 @@ public class RollercoasterFixture extends PathFixture{
 
     @Expose
     public float fovModifier;
+
+    @Expose
+    public float gravity;
     
     final float granularity = 1e-1f;
 
@@ -98,6 +101,8 @@ public class RollercoasterFixture extends PathFixture{
 
         Vec3d yAxis = new Vec3d(0, 1 ,0);
         Vec3d idkVector = forwardVector.crossProduct(yAxis);
+
+        rightVector = rightVector.add(idkVector.scale(-gravity));
 
         angle.roll = (float) Math.toDegrees(Math.acos(rightVector.dotProduct(idkVector) /
                         (rightVector.lengthVector() * idkVector.lengthVector()))) + 180F;
